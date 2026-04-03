@@ -68,6 +68,9 @@ export function jellybeanPM(config: JellybeanPMConfig): AstroIntegration {
         updateConfig({
           vite: {
             plugins: [virtualConfigPlugin(config)],
+            optimizeDeps: {
+              include: ['swr', 'use-sync-external-store/shim/index.js'],
+            },
           },
         });
       },
