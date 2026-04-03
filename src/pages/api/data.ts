@@ -41,7 +41,7 @@ type AuthResult = { token: string; userLogin: string; setCookie: string | null }
 
 async function requireAuth(request: Request, locals: unknown): Promise<AuthResult | Response> {
   // @ts-ignore — import.meta.env fallback for local dev; locals.runtime.env used in Cloudflare
-  const secret: string = (locals as any)?.runtime?.env?.KEYSTATIC_SECRET ?? import.meta.env.KEYSTATIC_SECRET ?? '';
+  const secret: string = (locals as any)?.runtime?.env?.SESSION_SECRET ?? import.meta.env.SESSION_SECRET ?? '';
   const hasRuntime = !!(locals as any)?.runtime?.env;
   const sessionRes = new Response();
   const session = await getIronSession<SessionData>(request, sessionRes, getSessionOptions(secret));
@@ -55,9 +55,9 @@ async function requireAuth(request: Request, locals: unknown): Promise<AuthResul
   if (nearExpiry && session.githubRefreshToken) {
     try {
       // @ts-ignore — two-tier env lookup
-      const clientId: string = (locals as any)?.runtime?.env?.KEYSTATIC_GITHUB_CLIENT_ID ?? import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID ?? '';
+      const clientId: string = (locals as any)?.runtime?.env?.GITHUB_CLIENT_ID ?? import.meta.env.GITHUB_CLIENT_ID ?? '';
       // @ts-ignore — two-tier env lookup
-      const clientSecret: string = (locals as any)?.runtime?.env?.KEYSTATIC_GITHUB_CLIENT_SECRET ?? import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET ?? '';
+      const clientSecret: string = (locals as any)?.runtime?.env?.GITHUB_CLIENT_SECRET ?? import.meta.env.GITHUB_CLIENT_SECRET ?? '';
       const tokenData = await refreshAccessToken(clientId, clientSecret, session.githubRefreshToken);
       session.githubToken = tokenData.access_token;
       session.githubRefreshToken = tokenData.refresh_token;

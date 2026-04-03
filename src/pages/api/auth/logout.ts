@@ -13,7 +13,7 @@ async function destroySessionAndRedirect(request: Request, redirect: (path: stri
 }
 
 // @ts-ignore — import.meta.env fallback for local dev; locals.runtime.env used in Cloudflare
-const getSecret = (locals: any): string => locals.runtime?.env?.KEYSTATIC_SECRET ?? import.meta.env.KEYSTATIC_SECRET ?? '';
+const getSecret = (locals: any): string => locals.runtime?.env?.SESSION_SECRET ?? import.meta.env.SESSION_SECRET ?? '';
 
 export const GET: APIRoute = ({ request, redirect, locals }) => destroySessionAndRedirect(request, redirect, getSecret(locals));
 export const POST: APIRoute = ({ request, redirect, locals }) => destroySessionAndRedirect(request, redirect, getSecret(locals));

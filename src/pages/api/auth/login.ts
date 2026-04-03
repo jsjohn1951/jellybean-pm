@@ -18,6 +18,6 @@ export const GET: APIRoute = ({ request, cookies, redirect, locals }) => {
   });
 
   // @ts-ignore — import.meta.env fallback for local dev; locals.runtime.env used in Cloudflare
-  const clientId: string = (locals as any).runtime?.env?.KEYSTATIC_GITHUB_CLIENT_ID ?? import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID ?? '';
+  const clientId: string = (locals as any).runtime?.env?.GITHUB_CLIENT_ID ?? import.meta.env.GITHUB_CLIENT_ID ?? '';
   return redirect(buildOAuthUrl(clientId, callbackUrl, state));
 };

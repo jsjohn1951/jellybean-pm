@@ -20,9 +20,9 @@ export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
 
   try {
     // @ts-ignore — import.meta.env fallback for local dev; locals.runtime.env used in Cloudflare
-    const clientId: string = (locals as any).runtime?.env?.KEYSTATIC_GITHUB_CLIENT_ID ?? import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID ?? '';
+    const clientId: string = (locals as any).runtime?.env?.GITHUB_CLIENT_ID ?? import.meta.env.GITHUB_CLIENT_ID ?? '';
     // @ts-ignore — import.meta.env fallback for local dev; locals.runtime.env used in Cloudflare
-    const clientSecret: string = (locals as any).runtime?.env?.KEYSTATIC_GITHUB_CLIENT_SECRET ?? import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET ?? '';
+    const clientSecret: string = (locals as any).runtime?.env?.GITHUB_CLIENT_SECRET ?? import.meta.env.GITHUB_CLIENT_SECRET ?? '';
     const tokenData = await exchangeCodeForToken(clientId, clientSecret, code);
     const token = tokenData.access_token;
 
@@ -55,7 +55,7 @@ export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
 
     const response = redirect('/project-management');
     // @ts-ignore — import.meta.env fallback for local dev; locals.runtime.env used in Cloudflare
-    const secret: string = (locals as any).runtime?.env?.KEYSTATIC_SECRET ?? import.meta.env.KEYSTATIC_SECRET ?? '';
+    const secret: string = (locals as any).runtime?.env?.SESSION_SECRET ?? import.meta.env.SESSION_SECRET ?? '';
     const session = await getIronSession<SessionData>(request, response, getSessionOptions(secret));
     session.githubToken = tokenData.access_token;
     session.githubRefreshToken = tokenData.refresh_token;

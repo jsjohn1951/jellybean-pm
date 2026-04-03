@@ -6,7 +6,7 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ request, locals }) => {
   // @ts-ignore — import.meta.env fallback for local dev; locals.runtime.env used in Cloudflare
-  const secret: string = (locals as any).runtime?.env?.KEYSTATIC_SECRET ?? import.meta.env.KEYSTATIC_SECRET ?? '';
+  const secret: string = (locals as any).runtime?.env?.SESSION_SECRET ?? import.meta.env.SESSION_SECRET ?? '';
   // For read-only session access, pass a dummy Response (we don't write cookies here)
   const session = await getIronSession<SessionData>(request, new Response(), getSessionOptions(secret));
   if (!session.githubUser) {
