@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "emitDeclarationOnly": true,
+    "rootDir": ".",
+    "paths": {
+      "virtual:jellybean-pm/config": ["./src/config/virtual.d.ts"]
+    }
+  },
+  "include": ["src/**/*", "index.ts"],
+  "exclude": ["dist", "node_modules", "**/*.test.ts"]
+}

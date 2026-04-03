@@ -1,0 +1,7 @@
+# Test files
+*.test.ts
+*.test.tsx
+
+# Dev tools
+vitest.config.*
+.github/
