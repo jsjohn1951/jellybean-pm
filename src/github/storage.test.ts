@@ -22,7 +22,7 @@ describe('GitHubStorage', () => {
 
   it('readJSON returns null when file not found (cold start)', async () => {
     mockGetFile.mockResolvedValue(null);
-    const storage = new GitHubStorage('token', config);
+    const storage = new GitHubStorage('token', config.storage);
     const result = await storage.readJSON('meta.json');
     expect(result).toBeNull();
     expect(mockGetFile).toHaveBeenCalledWith('.jellybean-pm/meta.json');
@@ -34,7 +34,7 @@ describe('GitHubStorage', () => {
       sha: 'abc123',
       content: Buffer.from(JSON.stringify(data)).toString('base64'),
     });
-    const storage = new GitHubStorage('token', config);
+    const storage = new GitHubStorage('token', config.storage);
     const result = await storage.readJSON<typeof data>('meta.json');
     expect(result?.data).toEqual(data);
     expect(result?.sha).toBe('abc123');
@@ -42,7 +42,7 @@ describe('GitHubStorage', () => {
 
   it('listIssueIds returns [] when directory not found', async () => {
     mockListDirectory.mockResolvedValue([]);
-    const storage = new GitHubStorage('token', config);
+    const storage = new GitHubStorage('token', config.storage);
     const ids = await storage.listIssueIds('app');
     expect(ids).toEqual([]);
   });
@@ -53,14 +53,14 @@ describe('GitHubStorage', () => {
       { name: 'ISS-002.json', path: '...', type: 'file' },
       { name: '.gitkeep',     path: '...', type: 'file' },
     ]);
-    const storage = new GitHubStorage('token', config);
+    const storage = new GitHubStorage('token', config.storage);
     const ids = await storage.listIssueIds('app');
     expect(ids).toEqual(['ISS-001', 'ISS-002']);
   });
 
   it('writeJSON encodes data as base64 and calls putFile with correct path', async () => {
     mockPutFile.mockResolvedValue(undefined);
-    const storage = new GitHubStorage('token', config);
+    const storage = new GitHubStorage('token', config.storage);
     await storage.writeJSON('meta.json', { nextIssueNumber: 1 }, undefined, 'test');
     expect(mockPutFile).toHaveBeenCalledWith(
       '.jellybean-pm/meta.json',

@@ -23,12 +23,12 @@ describe('defineConfig', () => {
 
   it('throws when storage.repo is missing', () => {
     expect(() => defineConfig({ ...base, storage: { repo: '', dataPath: '.jellybean-pm' } }))
-      .toThrow('config.storage.repo is required');
+      .toThrow('has no resolvable storage.repo');
   });
 
   it('throws when storage.dataPath is missing', () => {
     expect(() => defineConfig({ ...base, storage: { repo: 'owner/repo', dataPath: '' } }))
-      .toThrow('config.storage.dataPath is required');
+      .toThrow('has no resolvable storage.dataPath');
   });
 
   it('throws when projects is empty', () => {
