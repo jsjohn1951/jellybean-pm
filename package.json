@@ -8,6 +8,10 @@
       "default": "./index.ts"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsjohn1951/jellybean-pm.git"
+  },
   "main": "./index.ts",
   "types": "./dist/types/index.d.ts",
   "files": [
